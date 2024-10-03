@@ -10,7 +10,7 @@
 <body>
     <form method="get">
         <label for="num">Digite um numero: </label>
-        <input type="number" id="numero" name="numeroParImpar">
+        <input type="number" id="num" name="numeroParImpar">
         <button type="submit">Enviar</button>
     </form>
 </body>
@@ -18,13 +18,12 @@
 </html>
 
 <?php
+
 $num = intval($_GET['numeroParImpar']);
 
 if ($num % 2 == 0) {
     echo 'Este número é PAR' . '<br>';
-} elseif ($num == 0) {
-    echo 'Zero é PAR' . '<br>';
-} else {
-    echo 'Este numero é IMPAR';
+} elseif ($num != 0) {
+    echo 'Este numero é IMPAR' . '<br>';
 }
 ?>
