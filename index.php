@@ -40,7 +40,7 @@
             <option value="Gerente">Gerente</option>
             <option value="Analista">Analista</option>
             <input type="submit" value="Buscar">
-            </select>
+        </select>
     </section>
 
 
@@ -76,21 +76,18 @@
         
         $insertUsuario = $conn->query("insert into funcionarios (nome, salario, idade, telefone) values ('$nome', '$salario', '$idade', '$telefone');");   
         
+        $selectCargo = $conn->query("")
 
         if (isset($_GET['cargo'])); {
             $cargo = $_GET['cargo']
             $conn = mysqli_connect($servername, $username, $password, $database);
-            
+
         }
 
         foreach ($rowsFuncionarios as $funcionario) {
             renderTemplate($funcionario);
         }
 
-        
-        
-
-        
         
         mysqli_close($conn);
 
