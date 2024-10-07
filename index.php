@@ -1,51 +1,94 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Formulário Simples</title>
+    <title>kaik</title>
 </head>
 
 <body>
-    <div class="container">
 
-        <form method="get">
 
-            <label for="numero1">Numero 1:</label>
-            <input type="number" id="numero1" name="numero1" required>
+    <form method="get">
 
-            <label for="numero2">Numero 2:</label>
-            <input type="number" id="numero2" name="numero2" required>
+        <div id="container">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
 
-            <label for="numero3">Numero 3:</label>
-            <input type="number" id="numero3" name="numero3" required>
+            <label for="salario">Salário:</label>
+            <input type="float" id="salario" name="salario" required>
 
-            <button type="submit">Processar</button>
+            <label for="cargo">Cargo:</label>
+            <input type="text" id="cargo" name="cargo" required>
 
-        </form>
-    </div>
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade" name="idade" required>
+
+            <label for="cargo">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone" required>
+
+            <button type="menu">Cadastrar</button>
+
+        </div>
+    </form>
+
+    <section id="lista-cadastro">
+        <select name="Cargos" id="lista">
+            <option value="Educador">Educador</option>
+            <option value="Gerente">Gerente</option>
+            <option value="Analista">Analista</option>
+            <input type="submit" value="Buscar">
+            </select>
+    </section>
+
+
+    <section id="cad-funcionario">
+
+        <?php
+        function renderTemplate($funcionario)
+        {
+            include "template.php";
+        }
+
+        $servername = 'localhost';
+        $username = 'root';
+        $password = '';
+        $database = 'funcionarios';
+
+        $conn = mysqli_connect($servername, $username, $password, $database);
+
+        $selectFuncionarios = $conn->query('select * from funcionarios');
+
+        $rowsFuncionarios = $selectFuncionarios->fetch_all(MYSQLI_ASSOC);
+
+        $conn->close();
+
+
+
+        foreach ($rowsFuncionarios as $funcionario) {
+            renderTemplate($funcionario);
+        }
+        
+        $nome = $_GET['nome'];
+        $salario = $_GET['salario'];
+        $cargo = $_GET['cargo'];
+        $idade = $_GET['idade'];
+        $telefone = $_GET['telefone'];
+        
+        if (isset($_GET['cargo'])); {
+            $cargo = $_GET['cargo'];
+
+            $conn = mysqli_connect($servername, $username, $password, $database);
+        }
+
+
+        ?>
+
+
+
+    </section>
 </body>
 
 </html>
-
-<?php
-
-$n1 = intval($_GET['numero1']);
-$n2 = intval($_GET['numero2']);
-$n3 = intval($_GET['numero3']);
-
-
-$somaAeB = $n1 + $n2;
-
-echo 'Soma entre N1 e N2: ' . $somaAeB . '<br>';
-
-if ($somaAeB == $n3) {
-    echo 'A soma de N1 e N2 é igual a N3' . '</br>';
-} else {
-    echo 'Soma entre N1 e N2: ' . $somaAeB . '</br>';
-    echo 'A soma de N1 e N2 é diferente de N3';
-}
-
-?>
