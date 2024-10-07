@@ -59,17 +59,14 @@
 
         $conn = mysqli_connect($servername, $username, $password, $database);
 
+        if (!$conn) {
+            die("Conexão falhou: " . mysqli_connect_error());
+        }
+
         $selectFuncionarios = $conn->query('select * from funcionarios');
 
         $rowsFuncionarios = $selectFuncionarios->fetch_all(MYSQLI_ASSOC);
 
-        $conn->close();
-
-
-
-        foreach ($rowsFuncionarios as $funcionario) {
-            renderTemplate($funcionario);
-        }
         
         $nome = $_GET['nome'];
         $salario = $_GET['salario'];
@@ -77,12 +74,25 @@
         $idade = $_GET['idade'];
         $telefone = $_GET['telefone'];
         
-        if (isset($_GET['cargo'])); {
-            $cargo = $_GET['cargo'];
+        $insertUsuario = $conn->query("insert into funcionarios (nome, salario, idade, telefone) values ('$nome', '$salario', '$idade', '$telefone');");   
+        
 
+        if (isset($_GET['cargo'])); {
+            $cargo = $_GET['cargo']
             $conn = mysqli_connect($servername, $username, $password, $database);
+            
         }
 
+        foreach ($rowsFuncionarios as $funcionario) {
+            renderTemplate($funcionario);
+        }
+
+        
+        
+
+        
+        
+        mysqli_close($conn);
 
         ?>
 
