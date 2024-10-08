@@ -13,6 +13,9 @@
     <form id="sec-cad" method="get">
 
         <div id="container">
+
+            <h3> CADASTRO </h3>
+
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required>
 
@@ -35,12 +38,23 @@
 
     <section id="lista-cadastro">
         <form method="get" id="filtro-cargo">
+            <h3> CONSULTAR </h3>
             <select name="lista-cargo" id="lista">
                 <option value="Educador">Educador</option>
                 <option value="Gerente">Gerente</option>
                 <option value="Analista">Analista</option>
             </select>
             <input type="submit" value="Buscar">
+        </form>
+    </section>
+
+    <section id="delete-cadastro">
+        <form method="get">
+            <h3> DELETAR </h3>
+            <label for="id-delete">Insira o ID do usuário a ser deletado:</label>
+            <input type="number" id="id-delete" name="id-delete">
+            <button type="menu">Deletar</button>
+
         </form>
     </section>
 
@@ -73,10 +87,7 @@
 
         if (!$conn) {
             die("Conexão falhou: " . mysqli_connect_error());
-        }
-
-        $selectFuncionarios = $conn->query('select * from funcionarios');
-        
+        }        
 
         if ($nome = isset($_GET['nome']) && $salario = isset($_GET['salario']) && $cargo = isset($_GET['cargo']) && $idade = isset($_GET['idade']) && $telefone = isset($_GET['telefone'])) {
             
@@ -92,6 +103,12 @@
         if (isset($_GET['lista-cargo'])) {
             $cargo = $_GET['lista-cargo'];
             chamarLista($cargo);
+        }
+
+        if (isset($_GET['id-delete'])) {
+            $idDelete = $_GET['id-delete'];
+
+            $deleteUsuario = $conn->query("delete funcionarios from funcionarios where id = '$idDelete';");
         }
 
         

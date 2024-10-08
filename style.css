@@ -150,3 +150,16 @@ body {
     flex-wrap: wrap;
     gap: 10px;
 }
+
+#delete-cadastro {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#delete-cadastro h3 {
+  text-align: center;
+}
