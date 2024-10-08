@@ -10,7 +10,6 @@
 
 <body>
 
-
     <form id="sec-cad" method="get">
 
         <div id="container">
@@ -44,10 +43,6 @@
             <input type="submit" value="Buscar">
         </form>
     </section>
-
-    <!-- <form action="get" id="delete">
-        <button type="submit">APAGAR DADOS</button>
-    </form> -->
 
     <section id="cad-funcionario">
 
@@ -94,7 +89,7 @@
             $insertUsuario = $conn->query("insert into funcionarios (nome, salario, cargo, idade, telefone) values ('$nome', '$salario', '$cargo', '$idade', '$telefone');");   
         }
         
-        if (isset($_GET['lista-cargo'])); {
+        if (isset($_GET['lista-cargo'])) {
             $cargo = $_GET['lista-cargo'];
             chamarLista($cargo);
         }
