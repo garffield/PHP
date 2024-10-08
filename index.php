@@ -11,7 +11,7 @@
 <body>
 
 
-    <form method="get">
+    <form id="sec-cad" method="get">
 
         <div id="container">
             <label for="nome">Nome:</label>
@@ -24,7 +24,7 @@
             <input type="text" id="cargo" name="cargo" required>
 
             <label for="idade">Idade:</label>
-            <input type="number" id="idade" name="idade" required>
+            <input type="number" id="idade" name="idade" required> 
 
             <label for="cargo">Telefone:</label>
             <input type="tel" id="telefone" name="telefone" required>
@@ -35,22 +35,39 @@
     </form>
 
     <section id="lista-cadastro">
-        <select name="Cargos" id="lista">
-            <option value="Educador">Educador</option>
-            <option value="Gerente">Gerente</option>
-            <option value="Analista">Analista</option>
+        <form method="get" id="filtro-cargo">
+            <select name="lista-cargo" id="lista">
+                <option value="Educador">Educador</option>
+                <option value="Gerente">Gerente</option>
+                <option value="Analista">Analista</option>
+            </select>
             <input type="submit" value="Buscar">
-        </select>
+        </form>
     </section>
 
+    <!-- <form action="get" id="delete">
+        <button type="submit">APAGAR DADOS</button>
+    </form> -->
 
     <section id="cad-funcionario">
 
         <?php
-        function renderTemplate($funcionario)
+        function renderTemplate($funcionarios)
         {
             include "template.php";
         }
+
+        function chamarLista ($cargo) {
+            global $conn;
+            $selectCargo = $conn->query("select * from funcionarios where cargo = '$cargo';");       
+            $rowsFuncionarios = $selectCargo->fetch_all(MYSQLI_ASSOC);
+
+            foreach ($rowsFuncionarios as $funcionarios) {
+                renderTemplate($funcionarios);
+            }
+        }
+
+
 
         $servername = 'localhost';
         $username = 'root';
@@ -64,30 +81,25 @@
         }
 
         $selectFuncionarios = $conn->query('select * from funcionarios');
-
-        $rowsFuncionarios = $selectFuncionarios->fetch_all(MYSQLI_ASSOC);
-
         
-        $nome = $_GET['nome'];
-        $salario = $_GET['salario'];
-        $cargo = $_GET['cargo'];
-        $idade = $_GET['idade'];
-        $telefone = $_GET['telefone'];
-        
-        $insertUsuario = $conn->query("insert into funcionarios (nome, salario, idade, telefone) values ('$nome', '$salario', '$idade', '$telefone');");   
-        
-        $selectCargo = $conn->query("")
 
-        if (isset($_GET['cargo'])); {
-            $cargo = $_GET['cargo']
-            $conn = mysqli_connect($servername, $username, $password, $database);
+        if ($nome = isset($_GET['nome']) && $salario = isset($_GET['salario']) && $cargo = isset($_GET['cargo']) && $idade = isset($_GET['idade']) && $telefone = isset($_GET['telefone'])) {
+            
+            $nome = $_GET['nome'];
+            $salario = $_GET['salario'];
+            $cargo = $_GET['cargo'];
+            $idade = $_GET['idade'];
+            $telefone = $_GET['telefone'];
 
+            $insertUsuario = $conn->query("insert into funcionarios (nome, salario, cargo, idade, telefone) values ('$nome', '$salario', '$cargo', '$idade', '$telefone');");   
+        }
+        
+        if (isset($_GET['lista-cargo'])); {
+            $cargo = $_GET['lista-cargo'];
+            chamarLista($cargo);
         }
 
-        foreach ($rowsFuncionarios as $funcionario) {
-            renderTemplate($funcionario);
-        }
-
+        
         
         mysqli_close($conn);
 
